@@ -17,7 +17,8 @@ const UpdateWorkout = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.put(`/workouts/${id}`, workoutData, {
+      console.log(workoutData)
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/workouts/${id}`, workoutData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       alert("Workout updated successfully!");

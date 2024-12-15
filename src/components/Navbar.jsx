@@ -49,7 +49,7 @@ const Navbar = () => {
               <Link to="/profile" className="hover:text-gray-300">
                 Profile
               </Link>
-              <Link to="/workouts" className="hover:text-gray-300">
+              <Link to="/workout-history" className="hover:text-gray-300">
                 Workouts
               </Link>
               <Link to="/routines" className="hover:text-gray-300">

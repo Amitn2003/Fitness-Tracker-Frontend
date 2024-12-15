@@ -11,7 +11,7 @@ import Dashboard from './pages/Dashboard/Workouts';
 import Profile from "./pages/Dashboard/Profile";
 // import Workouts from "./pages/Workouts";
 import RoutinesList from "./pages/Routines/RoutinesList";
-// import RoutineDetails from './pages/Routines/RoutineDetails';
+import RoutineDetails from "./pages/Routines/RoutineDetails";
 import LogWorkout from './components/LogWorkout';
 import WorkoutHistory from "./components/WorkoutHistory";
 import WorkoutDetails from "./components/WorkoutDetails";
@@ -35,12 +35,14 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             {/* <Route path="/workouts" element={<Workouts />} />
             <Route path="/routines" element={<Routines />} /> */}
-             <Route path="/log-workout" element={<LogWorkout />} />
+             <Route path="/log-workout/:routineId" element={<LogWorkout />} />
           <Route path="/workout-history" element={<WorkoutHistory />} />
           <Route path="/workout-details/:id" element={<WorkoutDetails />}/>
           <Route path="/update-workout/:id" element={<UpdateWorkout />} />
             <Route path="/create-routine" element={<RoutineForm />} />
             <Route path="/routines" element={<RoutinesList />} />
+
+          <Route path="/routine-details/:id" element={<RoutineDetails />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>
         </div>
