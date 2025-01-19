@@ -37,6 +37,7 @@ const CreateRoutine = () => {
         }
 
         const data = await response.json();
+        console.log(data)
         setExercisesList(data.exercises || []);
       } catch (error) {
         toast.error(error.message);

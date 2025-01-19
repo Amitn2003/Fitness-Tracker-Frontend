@@ -1,6 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/useAuth"; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const Login = () => {
@@ -14,8 +17,10 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       await login(data);
-      alert("Welcome back!");
+      toast("Welcome back!");
+      window.location.href = "/";
     } catch (err) {
+      toast("Invalid email or password!");
       console.error(err);
     }
     // try {

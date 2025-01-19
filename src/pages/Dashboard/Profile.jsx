@@ -29,13 +29,17 @@ const Profile = () => {
         },
         body: JSON.stringify(profileData),
       });
-      console.log(response)
+  
+      // Ensure the response is not null and contains valid JSON
       const result = await response.json();
-      console.log(result)
-      if (result.success) {
+      console.log(result);
+  
+      if (response.ok && result && result.success) {
+        // If the response is successful and result has 'success' property
         toast.success('Profile updated successfully!');
       } else {
-        toast.error(result.message || 'Failed to update profile');
+        // If the response is not successful or result is missing 'success' property
+        toast.error(result?.message || 'Failed to update profile');
       }
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -50,7 +54,7 @@ const Profile = () => {
           <label>Name</label>
           <input
             type="text"
-            value={profileData.name}
+            value={profileData.username}
             onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
             className="w-full p-2 border border-gray-300 rounded"
           />
@@ -92,7 +96,7 @@ const Profile = () => {
           />
         </div>
         <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">
-          Update Profile
+          Update Profile (Beta😁)
         </button>
       </form>
     </div>

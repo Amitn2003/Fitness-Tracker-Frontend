@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../hooks/useAuth";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const registerSchema = z.object({
@@ -47,8 +50,11 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       await authRegister(data);
-      alert("Welcome to Fitz!");
+      // alert("Welcome to Fitz!");
+      toast("Welcome to Fitz!");
+      window.location.href = "/";      
     } catch (err) {
+      toast("Try with another email or password!");
       console.error(err);
     }
     // try {

@@ -1,528 +1,3 @@
-// import React, { useState } from "react";
-// import axios from "axios";
-
-// const LogWorkout = () => {
-//   const [workoutData, setWorkoutData] = useState({
-//     routine: "",
-//     duration: 0,
-//     exercises: [],
-//     notes: "",
-//     feelingRating: 0,
-//     location: "",
-//     weather: "",
-//     photoUrl: "",
-//   });
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setWorkoutData({ ...workoutData, [name]: value });
-//   };
-
-//   const handleSubmit = async () => {
-//     try {
-//       const response = await axios.post("/workouts", workoutData, {
-//         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-//       });
-//       alert("Workout logged successfully!");
-//     } catch (error) {
-//       console.error("Error logging workout:", error);
-//       alert("Failed to log workout.");
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h2>Log Workout</h2>
-//       <form>
-//         <input
-//           type="text"
-//           name="routine"
-//           placeholder="Routine ID"
-//           onChange={handleInputChange}
-//         />
-//         <input
-//           type="number"
-//           name="duration"
-//           placeholder="Duration (in minutes)"
-//           onChange={handleInputChange}
-//         />
-//         <textarea
-//           name="notes"
-//           placeholder="Notes"
-//           onChange={handleInputChange}
-//         ></textarea>
-//         <input
-//           type="number"
-//           name="feelingRating"
-//           placeholder="Feeling Rating (1-5)"
-//           onChange={handleInputChange}
-//         />
-//         <button type="button" onClick={handleSubmit}>
-//           Submit Workout
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default LogWorkout;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from "react";
-// import { useParams } from "react-router-dom";
-// import axios from "axios";
-
-// const LogWorkout = () => {
-//   const { routineId } = useParams();
-//   const [routine, setRoutine] = useState(null);
-//   const [workoutData, setWorkoutData] = useState({
-//     duration: 0,
-//     exercises: [],
-//     notes: "",
-//     feelingRating: 0,
-//     location: "",
-//     weather: "",
-//     photoUrl: "",
-//   });
-
-//   const [exerciseOptions, setExerciseOptions] = useState([]);
-
-//   // Fetching exercise options (this could be an API call to get all exercises available)
-//   const fetchExerciseOptions = async () => {
-//     try {
-//       const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/exercises`, {
-//         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-//       });
-//       console.log(response.data.exercises)
-//       setExerciseOptions(response.data.exercises);
-//     } catch (error) {
-//       console.error("Error fetching exercises:", error);
-//     }
-//   };
-
-//   const fetchRoutineDetails = async () => {
-//     try {
-//       const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/routines/${routineId}`, {
-//         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-//       });
-//       setRoutine(response.data);
-//       setWorkoutData((prev) => ({
-//         ...prev,
-//         exercises: response.data.exercises.map((exercise) => ({
-//           exercise: exercise._id,
-//           sets: [],
-//         })),
-//       }));
-//     } catch (error) {
-//       console.error("Error fetching routine:", error);
-//     }
-//   };
-
-
-//   function handleAddSet(exercise, exerciseIndex) {
-//   const updatedExercises = [...workoutData.exercises];
-//   updatedExercises[exerciseIndex][exercise] = exercise
-//   updatedExercises[exerciseIndex].sets.push({ weight: "", reps: "", duration: "", restAfter: "" });
-//   setWorkoutData({ ...workoutData, exercises: updatedExercises });
-// }
-
-// function handleRemoveSet(exerciseIndex, setIndex) {
-//   const updatedExercises = [...workoutData.exercises];
-//   updatedExercises[exerciseIndex].sets.splice(setIndex, 1);
-//   setWorkoutData({ ...workoutData, exercises: updatedExercises });
-// }
-
-// function handleSetChange(exercise, exerciseIndex, setIndex, field, value) {
-//   console.log(exerciseIndex, setIndex, field, value)
-//   const updatedExercises = [...workoutData.exercises];
-//   updatedExercises[exerciseIndex][exercise] = exercise
-//   updatedExercises[exerciseIndex].sets[setIndex][field] = value;
-//   setWorkoutData({ ...workoutData, exercises: updatedExercises });
-// }
-
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setWorkoutData({ ...workoutData, [name]: value });
-//   };
-
-//   const handleExerciseChange = (exercise, exerciseIndex, field, value) => {
-//     const updatedExercises = [...workoutData.exercises];
-//     updatedExercises[exerciseIndex][exercise] = exercise;
-//     updatedExercises[exerciseIndex][field] = value;
-//     setWorkoutData({ ...workoutData, exercises: updatedExercises });
-//   };
-
-//   //   try {
-//   //     // Validate and prepare the data
-//   //     const payload = {
-//   //       routine: routineId,
-//   //       duration: Number(workoutData.duration), // Ensure it's a number
-//   //       exercises: workoutData.exercises.map((exercise) => ({
-//   //         ...exercise,
-//   //         sets: Array.isArray(exercise.sets) ? exercise.sets : JSON.parse(exercise.sets), // Parse sets into array
-//   //       })),
-//   //       notes: workoutData.notes,
-//   //       feelingRating: Number(workoutData.feelingRating), // Ensure it's a number
-//   //       location: workoutData.location,
-//   //       weather: workoutData.weather,
-//   //       // photoUrl: workoutData.photoUrl, // Ensure it's a valid URL
-//   //     };
-  
-//   //     // Validate URL format
-//   //     const urlPattern = /^(https?:\/\/[^\s$.?#].[^\s]*)$/;
-//   //     // if (!urlPattern.test(payload.photoUrl)) {
-//   //     //   throw new Error("Invalid photo URL format.");
-//   //     // }
-  
-//   //     // Send to the backend
-//   //     console.log(payload)
-//   //     await axios.post(`${import.meta.env.VITE_BACKEND_URL}/workouts`, payload, {
-//   //       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-//   //     });
-  
-//   //     alert("Workout logged successfully!");
-//   //   } catch (error) {
-//   //     console.error("Error logging workout:", error);
-//   //     console.error("Error response:", error.response);
-//   //     alert(error.message || "Failed to log workout.");
-//   //   }
-//   // };
-//   const handleSubmit = async () => {
-//     try {
-//       // Validate and prepare the data
-//       const payload = {
-//         routine: routineId,
-//         duration: workoutData.duration ? Number(workoutData.duration) : 0, // Ensure duration is a number
-//         exercises: workoutData.exercises.map((exercise) => ({
-//           exercise: exercise.exerciseId,
-//           sets: exercise.sets.map((set) => ({
-//             weight: set.weight ? Number(set.weight) : 0, // Ensure weight is a number
-//             reps: set.reps ? Number(set.reps) : 0, // Ensure reps are numbers
-//             duration: set.duration ? Number(set.duration) : 0, // Optional field
-//             restAfter: set.restAfter ? Number(set.restAfter) : 0, // Ensure restAfter is a number
-//           })),
-//         })),
-//         notes: workoutData.notes || undefined, // Optional field
-//         feelingRating: workoutData.feelingRating ? Number(workoutData.feelingRating) : undefined, // Optional field
-//         location: workoutData.location || undefined, // Optional field
-//         weather: workoutData.weather || undefined, // Optional field
-//         photoUrl: workoutData.photoUrl || undefined, // Optional field
-//       };
-  
-//       console.log("Payload:", payload);
-  
-//       // Send the payload to the backend
-//       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/workouts`, {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Bearer ${localStorage.getItem("token")}`,
-//         },
-//         body: JSON.stringify(payload),
-//       });
-//       console.log(response)
-  
-//       if (!response.ok) {
-//         const errorData = await response.json();
-//         console.log(errorData)
-//         throw new Error(errorData.message || "Failed to log workout.");
-//       }
-  
-//       const result = await response.json();
-//       alert("Workout logged successfully!");
-//       console.log("Workout logged:", result);
-//     } catch (error) {
-//       console.error("Error logging workout:", error);
-//       alert(error.message || "Failed to log workout.");
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchExerciseOptions(); // Fetch the list of exercises when the component mounts
-//     fetchRoutineDetails(); // Fetch routine details
-//   }, [routineId]);
-
-//   // if (!routine) return <div>Loading...</div>;
-//   if (!routine || !exerciseOptions.length) return <div>Loading...</div>;
-//   //     <div>
-//   //       <h2>Log Workout for Routine: {routine.name}</h2>
-//   //       <form>
-//   //   <input
-//   //     type="number"
-//   //     name="duration"
-//   //     placeholder="Duration (minutes)"
-//   //     onChange={handleInputChange}
-//   //   />
-//   //   {routine.exercises.map((exercise, index) => (
-//   //     <div key={exercise._id}>
-//   //       <h4>{exercise.name}</h4>
-//   //       <textarea
-//   //         placeholder='Sets (e.g., [{"weight":100,"reps":10,"restAfter":90}])'
-//   //         onChange={(e) =>
-//   //           handleExerciseChange(index, "sets", e.target.value)
-//   //         }
-//   //       ></textarea>
-//   //     </div>
-//   //   ))}
-//   //   <textarea
-//   //     name="notes"
-//   //     placeholder="Notes"
-//   //     onChange={handleInputChange}
-//   //   ></textarea>
-//   //   <input
-//   //     type="number"
-//   //     name="feelingRating"
-//   //     placeholder="Feeling Rating (1-5)"
-//   //     onChange={handleInputChange}
-//   //   />
-//   //   <input
-//   //     type="url"
-//   //     name="photoUrl"
-//   //     placeholder="Photo URL"
-//   //     onChange={handleInputChange}
-//   //   />
-//   //   <button type="button" onClick={handleSubmit}>
-//   //     Submit Workout
-//   //   </button>
-//   // </form>
-  
-//   //     </div>
-
-//   // <div>
-//   //   <h2>Log Workout for Routine: {routine.name}</h2>
-//   //   <form>
-//   //     <input
-//   //       type="number"
-//   //       name="duration"
-//   //       placeholder="Duration (minutes)"
-//   //       onChange={handleInputChange}
-//   //     />
-//   //     {routine.exercises.map((exercise, exerciseIndex) => (
-//   //       <div key={exercise._id}>
-//   //         <h4>{exercise.name}</h4>
-//   //         {/* Render sets dynamically for each exercise */}
-//   //         {workoutData.exercises[exerciseIndex]?.sets?.map((set, setIndex) => (
-//   //           <div key={setIndex}>
-//   //             <input
-//   //               type="number"
-//   //               placeholder="Weight"
-//   //               value={set.weight}
-//   //               onChange={(e) =>
-//   //                 handleSetChange(exerciseIndex, setIndex, "weight", e.target.value)
-//   //               }
-//   //             />
-//   //             <input
-//   //               type="number"
-//   //               placeholder="Reps"
-//   //               value={set.reps}
-//   //               onChange={(e) =>
-//   //                 handleSetChange(exerciseIndex, setIndex, "reps", e.target.value)
-//   //               }
-//   //             />
-//   //             <input
-//   //               type="number"
-//   //               placeholder="Rest After (seconds)"
-//   //               value={set.restAfter}
-//   //               onChange={(e) =>
-//   //                 handleSetChange(exerciseIndex, setIndex, "restAfter", e.target.value)
-//   //               }
-//   //             />
-//   //             <button
-//   //               type="button"
-//   //               onClick={() => handleRemoveSet(exerciseIndex, setIndex)}
-//   //             >
-//   //               Remove Set
-//   //             </button>
-//   //           </div>
-//   //         ))}
-//   //         <button type="button" onClick={() => handleAddSet(exerciseIndex)}>
-//   //           Add Set
-//   //         </button>
-//   //       </div>
-//   //     ))}
-//   //     <textarea
-//   //       name="notes"
-//   //       placeholder="Notes"
-//   //       onChange={handleInputChange}
-//   //     ></textarea>
-//   //     <input
-//   //       type="number"
-//   //       name="feelingRating"
-//   //       placeholder="Feeling Rating (1-5)"
-//   //       onChange={handleInputChange}
-//   //     />
-//   //     <input
-//   //       type="url"
-//   //       name="photoUrl"
-//   //       placeholder="Photo URL"
-//   //       onChange={handleInputChange}
-//   //     />
-//   //     <button type="button" onClick={handleSubmit}>
-//   //       Submit Workout
-//   //     </button>
-//   //   </form>
-//   // </div>
-//   return (
-//     <div>
-//     <h2>Log Workout for Routine: {routine.name}</h2>
-//     <form>
-//       <input
-//         type="number"
-//         name="duration"
-//         placeholder="Duration (minutes)"
-//         onChange={handleInputChange}
-//       />
-      
-//       {routine.exercises.map((exercise, exerciseIndex) => {
-        
-//         // console.log(exercise.exercise.name)
-//         return (
-//         <div key={exercise._id}>
-//           <h4>{exercise.exercise.name} : </h4>
-
-
-//           {/* Render sets dynamically for each exercise */}
-//           {workoutData.exercises[exerciseIndex]?.sets?.map(
-//             (set, setIndex) => (
-//             <div key={setIndex}>
-//               <input
-//                 type="number"
-//                 placeholder="Weight"
-//                 value={set.weight}
-//                 onChange={(e) =>
-//                   handleSetChange(exercise.exercise.name,exerciseIndex, setIndex, "weight", e.target.value)
-//                 }
-//               />
-//               <input
-//                 type="number"
-//                 placeholder="Reps"
-//                 value={set.reps}
-//                 onChange={(e) =>
-//                   handleSetChange(exercise.exercise.name, exerciseIndex, setIndex, "reps", e.target.value)
-//                 }
-//               />
-//               <input
-//                 type="number"
-//                 placeholder="Rest After (seconds)"
-//                 value={set.restAfter}
-//                 onChange={(e) =>
-//                   handleSetChange(exercise.exercise.name, exerciseIndex, setIndex, "restAfter", e.target.value)
-//                 }
-//               />
-//               <button
-//                 type="button"
-//                 onClick={() => handleRemoveSet(exerciseIndex, setIndex)}
-//               >
-//                 Remove Set
-//               </button>
-//             </div>
-//           ))}
-//           <button type="button" onClick={() => handleAddSet(exercise.exercise.name, exerciseIndex)}>
-//             Add Set
-//           </button>
-//         </div>
-//       )})}
-//       <textarea
-//         name="notes"
-//         placeholder="Notes"
-//         onChange={handleInputChange}
-//       ></textarea>
-//       <input
-//         type="number"
-//         name="feelingRating"
-//         placeholder="Feeling Rating (1-5)"
-//         onChange={handleInputChange}
-//       />
-//       <input
-//         type="url"
-//         name="photoUrl"
-//         placeholder="Photo URL"
-//         onChange={handleInputChange}
-//       />
-//       <button type="button" onClick={handleSubmit}>
-//         Submit Workout
-//       </button>
-//     </form>
-//   </div>
-//   );
-// };
-
-// export default LogWorkout;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -541,6 +16,8 @@ const LogWorkout = () => {
     photoUrl: "",
   });
 
+  const [exerciseDetails, setExerciseDetails] = useState({});
+
   const [exerciseOptions, setExerciseOptions] = useState([]);
 
   const fetchExerciseOptions = async () => {
@@ -551,6 +28,7 @@ const LogWorkout = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
+      console.log(response)
       setExerciseOptions(response.data.exercises);
     } catch (error) {
       console.error("Error fetching exercises:", error);
@@ -565,11 +43,13 @@ const LogWorkout = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
+      console.log(response.data.exercises)
       setRoutine(response.data);
       setWorkoutData((prev) => ({
         ...prev,
         exercises: response.data.exercises.map((exercise) => ({
           exercise: exercise._id,
+          exerciseall: exercise,
           sets: [],
         })),
       }));
@@ -579,26 +59,62 @@ const LogWorkout = () => {
   };
 
   const handleAddSet = (exerciseIndex) => {
+    // const updatedExercises = [...workoutData.exercises];
+    // updatedExercises[exerciseIndex].sets.push({
+    //   weight: 0,
+    //   reps: 0,
+    //   duration: 0,
+    //   restAfter: 0,
+    // });
+    
+    // setWorkoutData({ ...workoutData, exercises: updatedExercises });
     const updatedExercises = [...workoutData.exercises];
-    updatedExercises[exerciseIndex].sets.push({
-      weight: 0,
-      reps: 0,
-      duration: 0,
-      restAfter: 0,
-    });
-    setWorkoutData({ ...workoutData, exercises: updatedExercises });
+  updatedExercises[exerciseIndex].sets.push({
+    weight: 0,
+    reps: 0,
+    duration: 0,
+    restAfter: 0,
+  });
+
+  // Recalculate the total duration after adding a set
+  const totalDuration = updatedExercises.reduce((total, exercise) => {
+    return total + exercise.sets.reduce((setTotal, set) => setTotal + (set.duration || 0), 0);
+  }, 0);
+
+  // Update workoutData with new total duration
+  setWorkoutData({ ...workoutData, exercises: updatedExercises, duration: totalDuration });
   };
 
   const handleRemoveSet = (exerciseIndex, setIndex) => {
+    // const updatedExercises = [...workoutData.exercises];
+    // updatedExercises[exerciseIndex].sets.splice(setIndex, 1);
+    // setWorkoutData({ ...workoutData, exercises: updatedExercises });
     const updatedExercises = [...workoutData.exercises];
-    updatedExercises[exerciseIndex].sets.splice(setIndex, 1);
-    setWorkoutData({ ...workoutData, exercises: updatedExercises });
+  updatedExercises[exerciseIndex].sets.splice(setIndex, 1);
+
+  // Recalculate the total duration after removing a set
+  const totalDuration = updatedExercises.reduce((total, exercise) => {
+    return total + exercise.sets.reduce((setTotal, set) => setTotal + (set.duration || 0), 0);
+  }, 0);
+
+  // Update workoutData with new total duration
+  setWorkoutData({ ...workoutData, exercises: updatedExercises, duration: totalDuration });
   };
 
   const handleSetChange = (exerciseIndex, setIndex, field, value) => {
+    // const updatedExercises = [...workoutData.exercises];
+    // updatedExercises[exerciseIndex].sets[setIndex][field] = value;
+    // setWorkoutData({ ...workoutData, exercises: updatedExercises });
     const updatedExercises = [...workoutData.exercises];
-    updatedExercises[exerciseIndex].sets[setIndex][field] = value;
-    setWorkoutData({ ...workoutData, exercises: updatedExercises });
+  updatedExercises[exerciseIndex].sets[setIndex][field] = value;
+
+  // Recalculate the total duration after a change in any set
+  const totalDuration = updatedExercises.reduce((total, exercise) => {
+    return total + exercise.sets.reduce((setTotal, set) => setTotal + (set.duration || 0), 0);
+  }, 0);
+
+  // Update workoutData with new total duration
+  setWorkoutData({ ...workoutData, exercises: updatedExercises, duration: totalDuration });
   };
 
   const handleInputChange = (e) => {
@@ -626,6 +142,7 @@ const LogWorkout = () => {
         weather: workoutData.weather || undefined,
         photoUrl: workoutData.photoUrl || undefined,
       };
+      console.log(payload)
 
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/workouts`,
@@ -653,108 +170,277 @@ const LogWorkout = () => {
     }
   };
 
+  const fetchExerciseDetails = async (exercises) => {
+    setExerciseDetails(exercises)
+    // console.log(exercises)
+  };
+
+
   useEffect(() => {
     fetchExerciseOptions();
     fetchRoutineDetails();
   }, [routineId]);
-
+  useEffect(() => {
+    if (routine) {
+      fetchExerciseDetails(routine.exercises); // Fetch details for each exercise
+    }
+  }, [routine]);
+  console.log(workoutData.exercises)
+  console.log()
   return (
-    <div>
-      <h2>Log Workout for Routine: {routine?.name}</h2>
+    <div className="container mx-auto p-4 md:p-8">
+      <h2 className="text-2xl font-bold text-center mb-6">Log Workout for Routine: {routine?.name}</h2>
       <form>
+        Total Duration : 
         <input
           type="number"
           name="duration"
           placeholder="Duration (minutes)"
           onChange={handleInputChange}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        {workoutData.exercises.map((exercise, exerciseIndex) => (
-          <div key={exerciseIndex}>
-            <h4>Exercise {exerciseIndex + 1}</h4>
-            {exercise.sets.map((set, setIndex) => (
-              <div key={setIndex}>
-                <input
-                  type="number"
-                  placeholder="Weight"
-                  value={set.weight}
-                  onChange={(e) =>
-                    handleSetChange(exerciseIndex, setIndex, "weight", e.target.value)
-                  }
-                />
-                <input
-                  type="number"
-                  placeholder="Reps"
-                  value={set.reps}
-                  onChange={(e) =>
-                    handleSetChange(exerciseIndex, setIndex, "reps", e.target.value)
-                  }
-                />
-                <input
-                  type="number"
-                  placeholder="Duration (seconds)"
-                  value={set.duration}
-                  onChange={(e) =>
-                    handleSetChange(exerciseIndex, setIndex, "duration", e.target.value)
-                  }
-                />
-                <input
-                  type="number"
-                  placeholder="Rest After (seconds)"
-                  value={set.restAfter}
-                  onChange={(e) =>
-                    handleSetChange(exerciseIndex, setIndex, "restAfter", e.target.value)
-                  }
-                />
-                <button type="button" onClick={() => handleRemoveSet(exerciseIndex, setIndex)}>
-                  Remove Set
-                </button>
+        {workoutData.exercises.map((exercise, exerciseIndex) => {
+          console.log(exercise.exerciseall, exerciseIndex)
+          const { name, description, difficulty, instructions, tips, youtubeLink, workoutType, equipment } = exercise.exerciseall.exercise;
+          // fetch from backend and show data ...
+          // console.log("Exercise Name ", exercise.exerciseall.exercise.name)
+          // console.log("Exercise Description ", exercise.exerciseall.exercise.description)
+          // console.log("Exercise Difficulty ", exercise.exerciseall.exercise.difficulty)
+          console.log("Exercise Instructions array ", exercise.exerciseall.exercise.instructions, instructions)
+          // console.log("Exercise Tips array ", exercise.exerciseall.exercise.tips)
+          console.log("Exercise YT Link ", exercise.exerciseall.exercise.youtubeLink)
+          // console.log("Exercise Workout Type ", exercise.exerciseall.exercise.workoutType)
+          // console.log("Exercise Equipment ", exercise.exerciseall.exercise.equipment)
+          return (
+            <div key={exerciseIndex} className="border p-4 rounded-lg bg-gray-50 shadow-md space-y-4" >
+              {/* <p className="inline">{exerciseIndex + 1}. </p>
+              <p className="inline">{exercise.exerciseall.exercise.name}</p>
+              <p>{exercise.exerciseall.exercise.description}</p>
+              <p>{exercise.exerciseall.exercise.difficulty}</p>
+               */}
+
+              <div className="flex items-center justify-between">
+                <p className="text-xl font-semibold">{exerciseIndex + 1}. {name}</p>
+                {/* You can later add an icon here */}
+                <p className="text-sm text-gray-500">{difficulty}</p>
               </div>
-            ))}
-            <button type="button" onClick={() => handleAddSet(exerciseIndex)}>
-              Add Set
-            </button>
-          </div>
-        ))}
-        <textarea
-          name="notes"
-          placeholder="Notes"
-          onChange={handleInputChange}
-        ></textarea>
-        <input
-          type="number"
-          name="feelingRating"
-          placeholder="Feeling Rating (1-5)"
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="weather"
-          placeholder="Weather"
-          onChange={handleInputChange}
-        />
-        <input
-          type="url"
-          name="photoUrl"
-          placeholder="Photo URL"
-          onChange={handleInputChange}
-        />
-        <button type="button" onClick={handleSubmit}>
+              <p className="text-gray-700">{description}</p>
+
+              {instructions.length > 0 && <div>
+                <p className="font-semibold">Instructions:</p>
+                <ul className="list-disc pl-6 text-gray-600">
+                  {instructions?.map((instruction, idx) => (
+                    <li key={idx}>{instruction}</li>
+                  ))}
+                </ul>
+              </div>}
+
+              {tips.length > 0 && <div>
+                <p className="font-semibold">Tips:</p>
+                <ul className="list-disc pl-6 text-gray-600">
+                  {tips?.map((tip, idx) => (
+                    <li key={idx}>{tip}</li>
+                  ))}
+                </ul>
+              </div>}
+
+              <div>
+                {workoutType && <p className="font-semibold">Workout Type: {workoutType}</p>}
+                {equipment && <p className="font-semibold">Equipment: {equipment}</p>}
+                {youtubeLink && youtubeLink != "none" && (
+                  <p className="text-blue-500 underline">
+                    <a href={youtubeLink} target="_blank" rel="noopener noreferrer">
+                      Watch Demo Video
+                    </a>
+                  </p>
+                )}
+              </div>
+
+
+              {exercise.sets.map((set, setIndex) => {
+                console.log(set)
+                return (
+                  <div key={setIndex} className="space-y-4 border p-4 rounded-lg bg-white shadow-md">
+                    {/* Weight : 
+                    <input
+                      type="number"
+                      placeholder="Weight"
+                      value={set.weight}
+                      onChange={(e) =>
+                        handleSetChange(exerciseIndex, setIndex, "weight", e.target.value)
+                      }
+                    />
+                    <br />
+                    Reps : 
+                    <input
+                      type="number"
+                      placeholder="Reps"
+                      value={set.reps}
+                      onChange={(e) =>
+                        handleSetChange(exerciseIndex, setIndex, "reps", e.target.value)
+                      }
+                    />
+                    <br />
+                    Duration : 
+                    <input
+                      type="number"
+                      placeholder="Duration (seconds)"
+                      value={set.duration}
+                      onChange={(e) =>
+                        handleSetChange(exerciseIndex, setIndex, "duration", e.target.value)
+                      }
+                    />
+                    <br />
+                    Rest time : 
+                    <input
+                      type="number"
+                      placeholder="Rest After (seconds)"
+                      value={set.restAfter}
+                      onChange={(e) =>
+                        handleSetChange(exerciseIndex, setIndex, "restAfter", e.target.value)
+                      }
+                    />
+                    <br />
+                    <button type="button" onClick={() => handleRemoveSet(exerciseIndex, setIndex)}>
+                      Remove Set
+                    </button> */}
+
+                    <div className="flex justify-between items-center">
+                      <label className="font-semibold text-gray-700">Weight (kg)</label>
+                      <input
+                        type="number"
+                        placeholder="Weight"
+                        value={set.weight}
+                        onChange={(e) =>
+                          handleSetChange(exerciseIndex, setIndex, "weight", e.target.value)
+                        }
+                        className="p-3 w-1/3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <label className="font-semibold text-gray-700">Reps</label>
+                      <input
+                        type="number"
+                        placeholder="Reps"
+                        value={set.reps}
+                        onChange={(e) =>
+                          handleSetChange(exerciseIndex, setIndex, "reps", e.target.value)
+                        }
+                        className="p-3 w-1/3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <label className="font-semibold text-gray-700">Duration (seconds)</label>
+                      <input
+                        type="number"
+                        placeholder="Duration"
+                        value={set.duration}
+                        onChange={(e) =>
+                          handleSetChange(exerciseIndex, setIndex, "duration", e.target.value)
+                        }
+                        className="p-3 w-1/3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <label className="font-semibold text-gray-700">Rest After (seconds)</label>
+                      <input
+                        type="number"
+                        placeholder="Rest After"
+                        value={set.restAfter}
+                        onChange={(e) =>
+                          handleSetChange(exerciseIndex, setIndex, "restAfter", e.target.value)
+                        }
+                        className="p-3 w-1/3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div className="flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveSet(exerciseIndex, setIndex)}
+                        className="text-red-500 hover:text-red-700 text-sm mt-2 focus:outline-none"
+                      >
+                        Remove Set
+                      </button>
+                    </div>
+
+
+                  </div>
+                )
+              })}
+              <button
+            type="button"
+            onClick={() => handleAddSet(exerciseIndex)}
+            className="bg-blue-500 text-white p-2 rounded-lg w-full mt-4 hover:bg-blue-600"
+          >
+            Add Set
+          </button>
+            </div>
+          )
+        })}
+        {/* Notes Input */}
+    <div>
+      <textarea
+        name="notes"
+        placeholder="Notes"
+        onChange={handleInputChange}
+        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      ></textarea>
+    </div>
+        {/* Feeling Rating Input */}
+    <div>
+      <input
+        type="number"
+        name="feelingRating"
+        placeholder="Feeling Rating (1-5)"
+        onChange={handleInputChange}
+        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+         {/* Location Input */}
+    <div>
+      <input
+        type="text"
+        name="location"
+        placeholder="Location"
+        onChange={handleInputChange}
+        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+        {/* Weather Input */}
+    {/* <div>
+      <input
+        type="text"
+        name="weather"
+        placeholder="Weather"
+        onChange={handleInputChange}
+        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div> */}
+        {/* Photo URL Input */}
+    <div>
+      <input
+        type="url"
+        name="photoUrl"
+        placeholder="Photo URL"
+        onChange={handleInputChange}
+        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    {/* Submit Button */}
+        <div className="mt-6" >
+        <button type="button" onClick={handleSubmit}
+        className="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600">
           Submit Workout
         </button>
+          </div>
       </form>
     </div>
   );
 };
 
 export default LogWorkout;
-
-
-
-
-

@@ -92,21 +92,23 @@ const RoutineDetails = () => {
         <div className="mt-6">
           <h3 className="text-xl font-semibold text-gray-700">Exercises</h3>
           <ul className="space-y-4 mt-4">
-            {routine.exercises.map((exercise) => (
+            {routine.exercises.map((exercise) => {
+              console.log(exercise)
+              return(
               <li key={exercise._id} className="p-4 border-b border-gray-200">
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="text-lg font-semibold text-gray-700">{exercise.exercise.name}</h4>
                     <p className="text-gray-600">{exercise.exercise.description}</p>
                   </div>
-                  <div className="text-gray-500">
+                  <div className="text-gray-500 min-w-24 p-1 m-1">
                     <p>Reps: {exercise.reps || "N/A"}</p>
                     <p>Sets: {exercise.sets || "N/A"}</p>
                     <p>Rest: {exercise.restBetweenSets} sec</p>
                   </div>
                 </div>
               </li>
-            ))}
+            )})}
           </ul>
         </div>
 

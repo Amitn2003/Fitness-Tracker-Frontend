@@ -40,3 +40,19 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.analytics-container {
+  padding: 20px;
+}
+
+.stat-card {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  margin-bottom: 30px;
+}
