@@ -1,10 +1,42 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import { useAuth } from '../../hooks/useAuth';
 
 const Settings = () => {
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
   const { theme, toggleTheme } = useTheme();
   const { logout } = useAuth();
+
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    });
+  }, []);
+
+  const installPWA = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted PWA installation");
+        }
+        setDeferredPrompt(null);
+      });
+    }
+  };
+  const requestNotificationPermission = async () => {
+    if ("Notification" in window) {
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        new Notification("Notifications Enabled!", {
+          body: "You will now receive fitness updates.",
+          icon: "/icons/icon-192x192.png",
+        });
+      }
+    }
+  };
+  
 
   return (
     <div className="max-w-md mx-auto mt-10">
@@ -26,6 +58,16 @@ const Settings = () => {
       >
         Logout
       </button>
+      <div>
+      <h2>Settings</h2>
+      <button onClick={installPWA} disabled={!deferredPrompt}>
+        Install Fitz App
+      </button>
+      <button onClick={requestNotificationPermission}>
+  Enable Notifications
+</button>
+
+    </div>
     </div>
   );
 };

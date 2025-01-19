@@ -1,0 +1,38 @@
+{
+    "name": "Fitz - Fitness Tracker",
+    "short_name": "Fitz",
+    "description": "Track your workouts, monitor progress, and stay fit!",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#4CAF50",
+    "icons": [
+      {
+        "src": "/icons/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/icons/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "shortcuts": [
+      {
+        "name": "Start Workout",
+        "short_name": "Workout",
+        "description": "Go directly to your workout routines",
+        "url": "/routines",
+        "icons": [{ "src": "/icons/workout.png", "sizes": "192x192", "type": "image/png" }]
+      },
+      {
+        "name": "View History",
+        "short_name": "History",
+        "description": "Check your workout history",
+        "url": "/workout-history",
+        "icons": [{ "src": "/icons/history.png", "sizes": "192x192", "type": "image/png" }]
+      }
+    ]
+  }
+  

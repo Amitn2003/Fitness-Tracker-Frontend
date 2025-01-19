@@ -22,6 +22,8 @@ import Settings from './pages/Dashboard/Settings';
 import AdminExercises from './pages/AdminExercises';
 import Homepage from './pages/Homepage';
 
+
+
 function App() {
   return (
     <>

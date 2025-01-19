@@ -175,7 +175,7 @@ const AnalyticsDashboard = () => {
         <div className="bg-white p-6 rounded-lg shadow-md mb-6">
           <h3 className="text-xl font-semibold mb-2">Today's Stats</h3>
           <p>Total Workouts: <strong>{dailyStats.totalWorkouts} times</strong></p>
-          <p>Total Duration: <strong>{dailyStats.totalDuration/60} minutes</strong></p>
+          <p>Total Duration: <strong>{dailyStats.totalDuration} minutes</strong></p>
           <p>Avg Feeling Rating: <strong>{dailyStats && dailyStats.averageFeelingRating && dailyStats.averageFeelingRating.toFixed(2)}</strong></p>
         </div>
       )}
