@@ -15,6 +15,8 @@ const LogWorkout = () => {
     weather: "",
     photoUrl: "",
   });
+  const [errors, setErrors] = useState({});
+
 
   const [exerciseDetails, setExerciseDetails] = useState({});
 
@@ -123,6 +125,37 @@ const LogWorkout = () => {
   };
 
   const handleSubmit = async () => {
+    let validationErrors = {};
+
+  // Validate Exercises
+  workoutData.exercises.forEach((exercise, exerciseIndex) => {
+    exercise.sets.forEach((set, setIndex) => {
+      if (!set.weight || set.weight <= 0) {
+        validationErrors[`weight-${exerciseIndex}-${setIndex}`] = "Weight is required and must be greater than 0.";
+      }
+      if (!set.reps || set.reps <= 0) {
+        validationErrors[`reps-${exerciseIndex}-${setIndex}`] = "Reps are required and must be greater than 0.";
+      }
+      if (!set.duration || set.duration <= 0) {
+        validationErrors[`duration-${exerciseIndex}-${setIndex}`] = "Duration is required and must be greater than 0.";
+      }
+    });
+  });
+
+  // Validate Feeling Rating
+  if (!workoutData.feelingRating || workoutData.feelingRating < 1 || workoutData.feelingRating > 5) {
+    validationErrors.feelingRating = "Feeling Rating is required (1-5).";
+  }
+
+  // Stop submission if there are validation errors
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    alert("Please correct the errors before submitting.");
+    return;
+  }
+
+  // Clear errors if validation passes
+  setErrors({});
     try {
       const payload = {
         routine: routineId,
@@ -305,7 +338,7 @@ const LogWorkout = () => {
                       Remove Set
                     </button> */}
 
-                    <div className="flex justify-between items-center">
+                    {/* <div className="flex justify-between items-center">
                       <label className="font-semibold text-gray-700">Weight (kg)</label>
                       <input
                         type="number"
@@ -365,7 +398,48 @@ const LogWorkout = () => {
                       >
                         Remove Set
                       </button>
-                    </div>
+                    </div> */}
+                    <div className="flex justify-between items-center">
+      <label className="font-semibold text-gray-700">Weight (kg)</label>
+      <input
+        type="number"
+        placeholder="Weight"
+        value={set.weight}
+        onChange={(e) => handleSetChange(exerciseIndex, setIndex, "weight", e.target.value)}
+        className="p-3 w-1/3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+    {errors[`weight-${exerciseIndex}-${setIndex}`] && (
+      <p className="text-red-500 text-sm">{errors[`weight-${exerciseIndex}-${setIndex}`]}</p>
+    )}
+
+    <div className="flex justify-between items-center">
+      <label className="font-semibold text-gray-700">Reps</label>
+      <input
+        type="number"
+        placeholder="Reps"
+        value={set.reps}
+        onChange={(e) => handleSetChange(exerciseIndex, setIndex, "reps", e.target.value)}
+        className="p-3 w-1/3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+    {errors[`reps-${exerciseIndex}-${setIndex}`] && (
+      <p className="text-red-500 text-sm">{errors[`reps-${exerciseIndex}-${setIndex}`]}</p>
+    )}
+
+    <div className="flex justify-between items-center">
+      <label className="font-semibold text-gray-700">Duration (seconds)</label>
+      <input
+        type="number"
+        placeholder="Duration"
+        value={set.duration}
+        onChange={(e) => handleSetChange(exerciseIndex, setIndex, "duration", e.target.value)}
+        className="p-3 w-1/3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+    {errors[`duration-${exerciseIndex}-${setIndex}`] && (
+      <p className="text-red-500 text-sm">{errors[`duration-${exerciseIndex}-${setIndex}`]}</p>
+    )}
 
 
                   </div>
@@ -396,9 +470,10 @@ const LogWorkout = () => {
         type="number"
         name="feelingRating"
         placeholder="Feeling Rating (1-5)"
-        onChange={handleInputChange}
+        onChange={handleInputChange} required
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
+      {errors.feelingRating && <p className="text-red-500 text-sm">{errors.feelingRating}</p>}
     </div>
          {/* Location Input */}
     <div>

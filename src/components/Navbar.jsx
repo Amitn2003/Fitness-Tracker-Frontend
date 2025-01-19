@@ -58,12 +58,12 @@ const Navbar = () => {
               <Link to="/settings" className="hover:text-gray-300">
                 Settings
               </Link>
-              <button
+              {/* <button
                 onClick={handleLogout}
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
               >
                 Logout
-              </button>
+              </button> */}
             </>
           ) : (
             <>
