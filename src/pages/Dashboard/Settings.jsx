@@ -42,6 +42,15 @@ const Settings = () => {
       }
     }
   };
+
+ const updateNotificationTimes = (timesArray) => {
+    localStorage.setItem("notificationTimes", JSON.stringify(timesArray));
+    location.reload(); // Restart the app to apply changes
+  };
+  
+  // Example usage (call this when the user saves settings):
+  // updateNotificationTimes(["06:30", "12:00", "18:00"]);
+  
   
 
   //     <div className="max-w-md mx-auto mt-10">

@@ -43,9 +43,12 @@ self.addEventListener("activate", (event) => {
   console.log("Service Worker Activated");
 });
 
-self.addEventListener("push", (event) => {
+self.addEventListener("push", async (event) => {
+  const streakData = await getWorkoutStreak(); // Fetch streak data
+  const message = `Today's Streak: ${streakData.streak}🔥 | Total: ${streakData.total}💪`;
+
   const options = {
-    body: "Time to log your morning workout!",
+    body: message,
     icon: "/android-chrome-192x192.png", // Add an icon in public/icons/
     badge: "/android-chrome-512x512.png",
     vibrate: [200, 100, 200],
@@ -53,7 +56,12 @@ self.addEventListener("push", (event) => {
 
   event.waitUntil(self.registration.showNotification("Morning Workout Reminder", options));
 });
-
+// Listen for messages from the main thread
+self.addEventListener("message", (event) => {
+  if (event.data.type === "STREAK_RESPONSE") {
+    self.streakData = event.data.streak;
+  }
+})
 // Background Sync or Alarm API
 self.addEventListener("periodicsync", (event) => {
   if (event.tag === "daily-workout-reminder") {
@@ -124,3 +132,52 @@ const scheduleNotification = () => {
 };
 
 scheduleNotification();
+
+
+
+// Function to retrieve streak data
+const getWorkoutStreak = async () => {
+  return new Promise((resolve) => {
+    self.clients.matchAll().then((clients) => {
+      if (clients.length > 0) {
+        clients[0].postMessage({ type: "GET_STREAK" });
+        self.addEventListener("message", (event) => {
+          if (event.data.type === "STREAK_RESPONSE") {
+            resolve(event.data.streak);
+          }
+        });
+      }
+    });
+  });
+};
+
+
+
+const scheduleDailyNotification = () => {
+  const now = new Date();
+  const targetTime = new Date();
+  targetTime.setHours(8, 3, 0, 0);
+
+  let timeUntilNext8AM = targetTime - now;
+  if (timeUntilNext8AM < 0) {
+    timeUntilNext8AM += 24 * 60 * 60 * 1000; // Add 24 hours if the time has passed
+  }
+
+  setTimeout(() => {
+    navigator.serviceWorker.ready.then((registration) => {
+      registration.showNotification("Good Morning!", {
+        body: "Checking your streak progress... 🏋️‍♂️",
+        icon: "/android-chrome-512x512.png",
+      });
+
+      // Fetch updated streak
+      navigator.serviceWorker.controller.postMessage({ type: "GET_STREAK" });
+
+      setInterval(() => {
+        navigator.serviceWorker.controller.postMessage({ type: "GET_STREAK" });
+      }, 24 * 60 * 60 * 1000);
+    });
+  }, timeUntilNext8AM);
+};
+
+scheduleDailyNotification()

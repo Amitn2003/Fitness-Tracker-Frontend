@@ -39,7 +39,9 @@ const WorkoutHistory = () => {
       <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Workout History</h2>
         <ul className="space-y-6">
-          {workouts.map((workout) => (
+          {workouts.map((workout) => {
+            if (workout.routine && workout.routine.name) {
+            return (
             <li key={workout._id} className="border-b border-gray-200 pb-6">
               {/* Workout Details */}
               <div>
@@ -62,13 +64,13 @@ const WorkoutHistory = () => {
                 <div className="mt-4">
                   <h3 className="text-xl font-semibold text-gray-700">Exercises:</h3>
                   <ul className="list-disc pl-6 space-y-3">
-                    {workout.exercises.map((exercise, index) => (
-                      <li key={index} className="text-gray-600">
+                    {workout.exercises.map((exercise, exerciseIndex) => (
+                      <li key={`${workout._id}-exercise-${exerciseIndex}`} className="text-gray-600">
                         <strong className="font-semibold">{exercise.exercise ? exercise.exercise.name : "Exercise not defined"}</strong>
                         {exercise.sets && exercise.sets.length > 0 && (
                           <ul className="list-inside mt-2 text-gray-500">
                             {exercise.sets.map((set, setIndex) => (
-                              <li key={setIndex}>
+                              <li key={`${workout._id}-set-${exerciseIndex}-${setIndex}`}>
                                 Set {setIndex + 1}: {set.reps} reps at {set.weight} kg, Rest: {set.restAfter} sec
                               </li>
                             ))}
@@ -90,7 +92,8 @@ const WorkoutHistory = () => {
                 </Link>
               </div>
             </li>
-          ))}
+          )}
+          return <></>})}
         </ul>
       </div>
     </div>

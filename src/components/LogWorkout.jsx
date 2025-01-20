@@ -196,6 +196,20 @@ const LogWorkout = () => {
 
       const result = await response.json();
       alert("Workout logged successfully!");
+      const updateWorkoutStreak = () => {
+        const today = new Date().toDateString();
+        let streakData = JSON.parse(localStorage.getItem("workoutStreak")) || { streak: 0, total: 0, lastDate: "" };
+      
+        if (streakData.lastDate !== today) {
+          streakData.streak += 1;
+          streakData.total += 1;
+          streakData.lastDate = today;
+          localStorage.setItem("workoutStreak", JSON.stringify(streakData));
+        }
+      };
+      
+      updateWorkoutStreak(); // Call this when a workout is completed
+      
       console.log("Workout logged:", result);
     } catch (error) {
       console.error("Error logging workout:", error);
