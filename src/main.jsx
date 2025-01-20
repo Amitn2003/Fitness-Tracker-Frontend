@@ -27,6 +27,19 @@ if ("serviceWorker" in navigator) {
   });
 }
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/serviceWorker.js", { type: "module" })
+      .then((registration) => {
+        console.log("Service Worker registered:", registration);
+      })
+      .catch((error) => {
+        console.error("Service Worker registration failed:", error);
+      });
+  });
+}
+
 // Schedule a notification every day at 8 AM
 // const scheduleDailyNotification = () => {
 //   const now = new Date();

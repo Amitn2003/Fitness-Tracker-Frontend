@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,10 +21,34 @@ import RoutineForm from "./pages/Routines/RoutineForm"
 import Settings from './pages/Dashboard/Settings';
 import AdminExercises from './pages/AdminExercises';
 import Homepage from './pages/Homepage';
+import { scheduleDailyNotification } from './utils/scheduleNotifications';
 
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/serviceWorker.js")
+    .then((registration) => {
+      console.log("Service Worker registered with scope:", registration.scope, registration);
+    })
+    .catch((error) => {
+      console.error("Service Worker registration failed:", error);
+    });
+    // Listen for messages from the service worker
+  navigator.serviceWorker.addEventListener("message", (event) => {
+    if (event.data.type === "GET_STREAK") {
+      const streakData = getWorkoutStreak();
+      navigator.serviceWorker.controller.postMessage({
+        type: "STREAK_RESPONSE",
+        streak: streakData,
+      });
+    }
+  });
+}
 
 function App() {
+  useEffect(() => {
+    scheduleDailyNotification();
+  }, []);
   return (
     <>
       <ThemeProvider>

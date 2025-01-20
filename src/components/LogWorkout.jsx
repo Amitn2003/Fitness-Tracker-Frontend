@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LogWorkout = () => {
   const { routineId } = useParams();
@@ -61,15 +63,6 @@ const LogWorkout = () => {
   };
 
   const handleAddSet = (exerciseIndex) => {
-    // const updatedExercises = [...workoutData.exercises];
-    // updatedExercises[exerciseIndex].sets.push({
-    //   weight: 0,
-    //   reps: 0,
-    //   duration: 0,
-    //   restAfter: 0,
-    // });
-    
-    // setWorkoutData({ ...workoutData, exercises: updatedExercises });
     const updatedExercises = [...workoutData.exercises];
   updatedExercises[exerciseIndex].sets.push({
     weight: 0,
@@ -80,7 +73,7 @@ const LogWorkout = () => {
 
   // Recalculate the total duration after adding a set
   const totalDuration = updatedExercises.reduce((total, exercise) => {
-    return total + exercise.sets.reduce((setTotal, set) => setTotal + (set.duration || 0), 0);
+    return total + exercise.sets.reduce((setTotal, set) => setTotal + (Number(set.duration) || 0), 0);
   }, 0);
 
   // Update workoutData with new total duration
@@ -96,7 +89,7 @@ const LogWorkout = () => {
 
   // Recalculate the total duration after removing a set
   const totalDuration = updatedExercises.reduce((total, exercise) => {
-    return total + exercise.sets.reduce((setTotal, set) => setTotal + (set.duration || 0), 0);
+    return total + exercise.sets.reduce((setTotal, set) => setTotal + (Number(set.duration) || 0), 0);
   }, 0);
 
   // Update workoutData with new total duration
@@ -112,7 +105,7 @@ const LogWorkout = () => {
 
   // Recalculate the total duration after a change in any set
   const totalDuration = updatedExercises.reduce((total, exercise) => {
-    return total + exercise.sets.reduce((setTotal, set) => setTotal + (set.duration || 0), 0);
+    return total + exercise.sets.reduce((setTotal, set) => setTotal + (Number(set.duration) || 0), 0);
   }, 0);
 
   // Update workoutData with new total duration
@@ -143,14 +136,14 @@ const LogWorkout = () => {
   });
 
   // Validate Feeling Rating
-  if (!workoutData.feelingRating || workoutData.feelingRating < 1 || workoutData.feelingRating > 5) {
-    validationErrors.feelingRating = "Feeling Rating is required (1-5).";
-  }
+  // if (!workoutData.feelingRating || workoutData.feelingRating < 1 || workoutData.feelingRating > 5) {
+  //   validationErrors.feelingRating = "Feeling Rating is required (1-5).";
+  // }
 
   // Stop submission if there are validation errors
   if (Object.keys(validationErrors).length > 0) {
     setErrors(validationErrors);
-    alert("Please correct the errors before submitting.");
+    toast.error("Please correct the errors before submitting.");
     return;
   }
 
@@ -170,7 +163,7 @@ const LogWorkout = () => {
           })),
         })),
         notes: workoutData.notes || undefined,
-        feelingRating: Number(workoutData.feelingRating),
+        feelingRating: Number(workoutData.feelingRating) || 4,
         location: workoutData.location || undefined,
         weather: workoutData.weather || undefined,
         photoUrl: workoutData.photoUrl || undefined,
@@ -195,7 +188,8 @@ const LogWorkout = () => {
       }
 
       const result = await response.json();
-      alert("Workout logged successfully!");
+      
+      toast.success("Workout logged successfully!");
       const updateWorkoutStreak = () => {
         const today = new Date().toDateString();
         let streakData = JSON.parse(localStorage.getItem("workoutStreak")) || { streak: 0, total: 0, lastDate: "" };
@@ -213,7 +207,7 @@ const LogWorkout = () => {
       console.log("Workout logged:", result);
     } catch (error) {
       console.error("Error logging workout:", error);
-      alert(error.message || "Failed to log workout.");
+      toast.error(error.message || "Failed to log workout.");
     }
   };
 
@@ -243,6 +237,7 @@ const LogWorkout = () => {
           type="number"
           name="duration"
           placeholder="Duration (minutes)"
+          value={workoutData.duration}
           onChange={handleInputChange}
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -260,11 +255,15 @@ const LogWorkout = () => {
           // console.log("Exercise Equipment ", exercise.exerciseall.exercise.equipment)
           return (
             <div key={exerciseIndex} className="border p-4 rounded-lg bg-gray-50 shadow-md space-y-4" >
-              {/* <p className="inline">{exerciseIndex + 1}. </p>
-              <p className="inline">{exercise.exerciseall.exercise.name}</p>
-              <p>{exercise.exerciseall.exercise.description}</p>
-              <p>{exercise.exerciseall.exercise.difficulty}</p>
-               */}
+              { exercise.exerciseall.exercise.imageUrl && exercise.exerciseall.exercise.imageUrl  != "" && (
+    <div className="flex justify-center mb-4">
+      <img 
+        src={exercise.exerciseall.exercise.imageUrl} 
+        alt={exercise.exerciseall.exercise.name} 
+        className="w-full h-auto max-w-xs rounded-lg"
+      />
+    </div>
+  )}
 
               <div className="flex items-center justify-between">
                 <p className="text-xl font-semibold">{exerciseIndex + 1}. {name}</p>

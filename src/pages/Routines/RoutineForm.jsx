@@ -161,215 +161,43 @@ const CreateRoutine = () => {
 
 
 
-
-
-
-
-
-
-
-  
-  //     <form onSubmit={handleSubmit}>
-  //   {/* Name */}
-  //   <div>
-  //     <label>Name</label>
-  //     <input
-  //       type="text"
-  //       name="name"
-  //       value={routineData.name}
-  //       onChange={handleChange}
-  //       required
-  //     />
-  //   </div>
-  
-  //   {/* Description */}
-  //   <div>
-  //     <label>Description</label>
-  //     <textarea
-  //       name="description"
-  //       value={routineData.description}
-  //       onChange={handleChange}
-  //       required
-  //     />
-  //   </div>
-  
-  //   {/* Difficulty */}
-  //   <div>
-  //     <label>Difficulty</label>
-  //     <select name="difficulty" value={routineData.difficulty} onChange={handleChange}>
-  //       <option value="Beginner">Beginner</option>
-  //       <option value="Intermediate">Intermediate</option>
-  //       <option value="Advanced">Advanced</option>
-  //     </select>
-  //   </div>
-  
-  //   {/* Estimated Duration */}
-  //   <div>
-  //     <label>Estimated Duration (minutes)</label>
-  //     <input
-  //       type="number"
-  //       name="estimatedDuration"
-  //       value={routineData.estimatedDuration}
-  //       onChange={handleChange}
-  //       min={1}
-  //       required
-  //     />
-  //   </div>
-  
-  //   {/* Target Muscle Groups */}
-  //   <div>
-  //     <label>Target Muscle Groups</label>
-  //     <select
-  //       name="targetMuscleGroups"
-  //       value={routineData.targetMuscleGroups}
-  //       onChange={(e) =>
-  //         setRoutineData((prevData) => ({
-  //           ...prevData,
-  //           targetMuscleGroups: Array.from(e.target.selectedOptions, (option) => option.value),
-  //         }))
-  //       }
-  //       multiple
-  //     >
-  //       <option value="Legs">Legs</option>
-  //       <option value="Chest">Chest</option>
-  //       <option value="Back">Back</option>
-  //       <option value="Arms">Arms</option>
-  //       <option value="Shoulders">Shoulders</option>
-  //       <option value="Core">Core</option>
-  //     </select>
-  //   </div>
-  
-  //   {/* Workout Type */}
-  //   <div>
-  //     <label>Workout Type</label>
-  //     <select name="workoutType" value={routineData.workoutType} onChange={handleChange}>
-  //       <option value="Strength">Strength</option>
-  //       <option value="Cardio">Cardio</option>
-  //       <option value="Flexibility">Flexibility</option>
-  //       <option value="Balance">Balance</option>
-  //     </select>
-  //   </div>
-  
-  //   {/* Equipment */}
-  //   <div>
-  //     <label>Equipment</label>
-  //     <select
-  //       name="equipment"
-  //       value={routineData.equipment}
-  //       onChange={(e) =>
-  //         setRoutineData((prevData) => ({
-  //           ...prevData,
-  //           equipment: Array.from(e.target.selectedOptions, (option) => option.value),
-  //         }))
-  //       }
-  //       multiple
-  //     >
-  //       <option value="Barbell">Barbell</option>
-  //       <option value="Dumbbells">Dumbbells</option>
-  //       <option value="Bench">Bench</option>
-  //       <option value="Kettlebells">Kettlebells</option>
-  //       <option value="Bodyweight">Bodyweight</option>
-  //     </select>
-  //   </div>
-  
-  //   {/* Tags */}
-  //   <div>
-  //     <label>Tags</label>
-  //     <input
-  //       type="text"
-  //       name="tags"
-  //       value={routineData.tags}
-  //       onChange={(e) =>
-  //         setRoutineData((prevData) => ({
-  //           ...prevData,
-  //           tags: e.target.value.split(",").map((tag) => tag.trim()),
-  //         }))
-  //       }
-  //       placeholder="Comma-separated tags (e.g., Full Body, Strength Training)"
-  //     />
-  //   </div>
-  
-  //   {/* Exercises */}
-  //   <div>
-  //     <label>Exercises</label>
-  //     {routineData.exercises.map((exercise, index) => (
-  //       <div key={index}>
-  //         <select
-  //           value={exercise.exercise}
-  //           onChange={(e) => handleExerciseChange(index, e.target.value)}
-  //           required
-  //         >
-  //           <option value="">Select Exercise</option>
-  //           {exercisesList.map((ex) => (
-  //             <option key={ex._id} value={ex._id}>
-  //               {ex.name}
-  //             </option>
-  //           ))}
-  //         </select>
-  //         <input
-  //           type="number"
-  //           name="sets"
-  //           placeholder="Sets"
-  //           value={exercise.sets}
-  //           onChange={(e) => handleExerciseChange(index, e.target.value)}
-  //           min={1}
-  //           required
-  //         />
-  //         <input
-  //           type="number"
-  //           name="reps"
-  //           placeholder="Reps"
-  //           value={exercise.reps}
-  //           onChange={(e) => handleExerciseChange(index, e.target.value)}
-  //           min={1}
-  //           required
-  //         />
-  //         <button type="button" onClick={() => removeExercise(index)}>
-  //           Remove
-  //         </button>
-  //       </div>
-  //     ))}
-  //     <button type="button" onClick={addExercise}>
-  //       Add Exercise
-  //     </button>
-  //   </div>
-  
-  //   {/* Submit Button */}
-  //   <div>
-  //     <button type="submit" disabled={loading}>
-  //       {loading ? "Loading..." : "Create Routine"}
-  //     </button>
-  //   </div>
-  // </form>
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}  className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg space-y-6">
+      <h2 className="text-2xl font-semibold text-center">Create Your Routine</h2>
       {/* Name */}
       <div>
-        <label>Name</label>
+        <label className="block text-sm font-medium text-gray-700">Name</label>
         <input
           type="text"
           name="name"
           value={routineData.name}
           onChange={handleChange}
+          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           required
         />
       </div>
 
-      {/* Description */}
-      <div>
-        <label>Description</label>
+       {/* Description */}
+       <div>
+        <label className="block text-sm font-medium text-gray-700">Description</label>
         <textarea
           name="description"
           value={routineData.description}
           onChange={handleChange}
+          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           required
         />
       </div>
 
       {/* Difficulty */}
       <div>
-        <label>Difficulty</label>
-        <select name="difficulty" value={routineData.difficulty} onChange={handleChange}>
+        <label className="block text-sm font-medium text-gray-700">Difficulty</label>
+        <select
+          name="difficulty"
+          value={routineData.difficulty}
+          onChange={handleChange}
+          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+        >
           <option value="Beginner">Beginner</option>
           <option value="Intermediate">Intermediate</option>
           <option value="Advanced">Advanced</option>
@@ -378,12 +206,13 @@ const CreateRoutine = () => {
 
       {/* Estimated Duration */}
       <div>
-        <label>Estimated Duration (minutes)</label>
+        <label className="block text-sm font-medium text-gray-700">Estimated Duration (minutes)</label>
         <input
           type="number"
           name="estimatedDuration"
           value={routineData.estimatedDuration}
           onChange={handleChange}
+          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           min={1}
           required
         />
@@ -391,18 +220,21 @@ const CreateRoutine = () => {
 
       {/* Target Muscle Groups (Checkboxes) */}
       <div>
-        <label>Target Muscle Groups</label>
-        <div>
-          {["Legs", "Chest", "Back", "Arms", "Shoulders", "Core"].map((muscle) => (
-            <label key={muscle}>
+        <label className="block text-sm font-medium text-gray-700">Target Muscle Groups</label>
+        <div className="space-x-3">
+          {[ "Legs", "Chest", "Back", "Arms", "Shoulders", "Core", "Glutes", "Traps", "Calves",
+  "Forearms", "Abs", "Hip Flexors", "Lats", "Upper Back", "Lower Back", "Obliques",
+  "Neck", "Adductors", "Abductors", "Biceps", "Triceps", "Quadriceps"].map((muscle) => (
+            <label key={muscle} className="inline-flex items-center">
               <input
                 type="checkbox"
                 name="targetMuscleGroups"
                 value={muscle}
                 checked={routineData.targetMuscleGroups.includes(muscle)}
                 onChange={handleChange}
+                className="form-checkbox text-indigo-600"
               />
-              {muscle}
+              <span className="ml-2 text-sm text-gray-700">{muscle}</span>
             </label>
           ))}
         </div>
@@ -410,8 +242,13 @@ const CreateRoutine = () => {
 
       {/* Workout Type */}
       <div>
-        <label>Workout Type</label>
-        <select name="workoutType" value={routineData.workoutType} onChange={handleChange}>
+        <label className="block text-sm font-medium text-gray-700">Workout Type</label>
+        <select
+          name="workoutType"
+          value={routineData.workoutType}
+          onChange={handleChange}
+          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+        >
           <option value="Strength">Strength</option>
           <option value="Cardio">Cardio</option>
           <option value="Flexibility">Flexibility</option>
@@ -421,18 +258,23 @@ const CreateRoutine = () => {
 
       {/* Equipment (Checkboxes) */}
       <div>
-        <label>Equipment</label>
-        <div>
-          {["Barbell", "Dumbbells", "Bench", "Kettlebells", "Bodyweight"].map((equipment) => (
-            <label key={equipment}>
+        <label className="block text-sm font-medium text-gray-700">Equipment</label>
+        <div className="space-x-3">
+          {["Barbell", "Dumbbells", "Bench", "Kettlebells", "Bodyweight", "Resistance Bands", 
+  "TRX", "Pull-Up Bar", "Medicine Ball", "Leg Press", "Cable Machine", "Jump Rope", 
+  "Exercise Ball", "Smith Machine", "Battle Ropes", "Bosu Ball", "Rowing Machine", 
+  "Stationary Bike", "Treadmill", "Suspension Trainer", "Ab Wheel", "Parallel Bars", 
+  "Vibration Plate", "Exercise Mat", "Foam Roller"].map((equipment) => (
+            <label key={equipment} className="inline-flex items-center">
               <input
                 type="checkbox"
                 name="equipment"
                 value={equipment}
                 checked={routineData.equipment.includes(equipment)}
                 onChange={handleChange}
+                className="form-checkbox text-indigo-600"
               />
-              {equipment}
+              <span className="ml-2 text-sm text-gray-700">{equipment}</span>
             </label>
           ))}
         </div>
@@ -440,7 +282,7 @@ const CreateRoutine = () => {
 
       {/* Tags */}
       <div>
-        <label>Tags</label>
+        <label className="block text-sm font-medium text-gray-700">Tags</label>
         <input
           type="text"
           name="tags"
@@ -451,12 +293,13 @@ const CreateRoutine = () => {
               tags: e.target.value.split(",").map((tag) => tag.trim()),
             }))
           }
+          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           placeholder="Comma-separated tags (e.g., Full Body, Strength Training)"
         />
       </div>
 
       {/* Exercises */}
-      <div>
+      {/* <div>
         <label>Exercises</label>
         {routineData.exercises.map((exercise, index) => (
           <div key={index}>
@@ -496,11 +339,71 @@ const CreateRoutine = () => {
         <button type="button" onClick={addExercise}>
           Add Exercise
         </button>
+      </div> */}
+
+
+{/* Exercises */}
+<div>
+        <label className="block text-sm font-medium text-gray-700">Exercises</label>
+        {routineData.exercises.map((exercise, index) => (
+          <div key={index} className="flex items-center space-x-3 mb-3">
+            <select
+              value={exercise.exercise}
+              onChange={(e) => handleExerciseChange(index, "exercise", e.target.value)}
+              className="p-2 w-1/2 border border-gray-300 rounded-md"
+              required
+            >
+              <option value="">Select Exercise</option>
+              {exercisesList.map((ex) => (
+                <option key={ex._id} value={ex._id}>
+                  {ex.name}
+                </option>
+              ))}
+            </select>
+            <input
+              type="number"
+              placeholder="Sets"
+              value={exercise.sets}
+              onChange={(e) => handleExerciseChange(index, "sets", e.target.value)}
+              className="p-2 w-1/6 border border-gray-300 rounded-md"
+              min={1}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Reps"
+              value={exercise.reps}
+              onChange={(e) => handleExerciseChange(index, "reps", e.target.value)}
+              className="p-2 w-1/6 border border-gray-300 rounded-md"
+              min={1}
+              required
+            />
+            <button
+              type="button"
+              onClick={() => removeExercise(index)}
+              className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addExercise}
+          className="p-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
+        >
+          Add Exercise
+        </button>
       </div>
 
+
       {/* Submit Button */}
-      <div>
-        <button type="submit" disabled={loading}>
+     <div className="text-center">
+        <button
+          type="submit"
+          disabled={loading}
+          className="mt-4 p-2 bg-green-500 text-white rounded-md hover:bg-green-600 disabled:bg-gray-300"
+        >
           {loading ? "Loading..." : "Create Routine"}
         </button>
       </div>

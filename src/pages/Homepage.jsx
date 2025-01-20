@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ConditionalButtons from "../components/ConditionalButtons";
 
 const Homepage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,14 +45,15 @@ const Homepage = () => {
   <p className="mt-4 text-lg md:text-2xl text-center max-w-3xl">
     Track your progress, stay consistent, and achieve your fitness goals with ease.
   </p>
-  <div className="mt-6 flex gap-4">
+  {/* <div className="mt-6 flex gap-4">
     <a href="/register" className="px-6 py-3 bg-yellow-400 text-gray-900 font-bold rounded-lg shadow-lg hover:bg-yellow-500 transition">
       Get Started
     </a>
     <a href="/routines" className="px-6 py-3 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-blue-600 transition">
       Explore Workouts
     </a>
-  </div>
+  </div> */}
+  <ConditionalButtons/>
 </section>
 
 

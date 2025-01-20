@@ -1,5 +1,15 @@
-const CACHE_NAME = "fitz-cache-v1";
-const urlsToCache = ["/", "/offline.html", "/workout-history", "/routines"];
+const CACHE_NAME = "fitz-cache-v2";
+const urlsToCache = [
+  "/",
+  "/manifest.json",
+  "/offline.html",
+  "/android-chrome-512x512.png",
+  "/routines", 
+  "/dashboard", 
+  "/profile", 
+  "/workout-history", 
+  "/settings"
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -19,17 +29,14 @@ self.addEventListener("fetch", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames.map((cacheName) => {
-          if (!cacheWhitelist.includes(cacheName)) {
-            return caches.delete(cacheName);
-          }
-        })
-      )
-    )
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((name) => name !== CACHE_NAME)
+          .map((name) => caches.delete(name))
+      );
+    })
   );
 });
 
@@ -40,6 +47,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
+  event.waitUntil(self.clients.claim());
   console.log("Service Worker Activated");
 });
 
@@ -62,6 +70,20 @@ self.addEventListener("message", (event) => {
     self.streakData = event.data.streak;
   }
 })
+
+// Background Sync for Notifications
+self.addEventListener("sync", (event) => {
+  if (event.tag === "daily-fitness-reminder") {
+    event.waitUntil(
+      self.registration.showNotification("Daily Fitness Reminder", {
+        body: "Don't forget to log your workout today!",
+        icon: "/android-chrome-512x512.png",
+      })
+    );
+  }
+});
+
+
 // Background Sync or Alarm API
 self.addEventListener("periodicsync", (event) => {
   if (event.tag === "daily-workout-reminder") {
@@ -92,6 +114,9 @@ const requestPermissions = async () => {
           .catch((error) => console.error("Periodic sync registration failed", error));
       });
     }
+  }
+  else {
+    console.error("Notification permission denied");
   }
 };
 
@@ -181,3 +206,51 @@ const scheduleDailyNotification = () => {
 };
 
 scheduleDailyNotification()
+
+
+
+
+
+
+
+
+
+
+
+// Function to send notifications every 5 minutes (for testing)
+const scheduleTestNotifications =  () => {
+  const notificationInterval = 5 * 60 * 1000; // 1 second for testing
+
+  setInterval(async () => {
+    console.log("Notification 4 test");
+
+    if (navigator.serviceWorker && navigator.serviceWorker.ready) {
+      navigator.serviceWorker.ready.then((registration) => {
+        registration.showNotification("Reminder", {
+          body: "It's time to check your streak progress! 🏋️‍♂️",
+          icon: "/android-chrome-512x512.png",
+        });
+      }).catch((error) => {
+        console.error("Error showing notification:", error);
+      });
+    } else {
+      console.log("Service Worker is not ready yet");
+    }
+  }, notificationInterval);
+};
+
+scheduleTestNotifications();  // Call the function to start sending notifications every 5 minutes
+
+
+const scheduleNotifications = () => {
+  const notificationInterval = 30 * 60 * 1000; // 5 minutes in milliseconds
+  setInterval(() => {
+    self.registration.showNotification('Reminder', {
+      body: "It's time to check your streak progress2222! 🏋️‍♂️",
+      icon: '/android-chrome-512x512.png',
+    });
+  }, notificationInterval);
+};
+console.log("From service worker inside")
+// Call this function inside the service worker's activate event to start the notification interval
+scheduleNotifications();

@@ -96,6 +96,15 @@ const WorkoutDetails = () => {
             }
           </p>
 
+          {/* Render image if available */}
+          {currentExercise.imageUrl && currentExercise.imageUrl != "" && (
+            <img 
+              src={currentExercise.imageUrl} 
+              alt={currentExercise.name} 
+              className="w-full mt-4 rounded-lg shadow-lg"
+            />
+          )}
+
           {/* Sets */}
           <ul className="list-inside mt-4">
             {exercise.sets.map((set, setIndex) => (

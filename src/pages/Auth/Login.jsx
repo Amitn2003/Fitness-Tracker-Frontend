@@ -17,35 +17,12 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       await login(data);
-      toast("Welcome back!");
+      toast.success("Welcome back!");
       window.location.href = "/";
     } catch (err) {
-      toast("Invalid email or password!");
+      toast.error("Invalid email or password!");
       console.error(err);
     }
-    // try {
-    //   const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   });
-    //   console.log(response)
-
-    //   if (response.ok) {
-    //     const result = await response.json();
-    //     console.log(result)
-    //     localStorage.setItem("user", JSON.stringify(result.user));
-    //     localStorage.setItem("token", result.token);
-    //     alert("Login successful!");
-    //   } else {
-    //     const error = await response.json();
-    //     alert(error.message || "Login failed.");
-    //   }
-    // } catch (err) {
-    //   console.error("Login error:", err);
-    // }
   };
 
   return (

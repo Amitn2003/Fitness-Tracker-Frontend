@@ -51,10 +51,10 @@ const Register = () => {
     try {
       await authRegister(data);
       // alert("Welcome to Fitz!");
-      toast("Welcome to Fitz!");
+      toast.success("Welcome to Fitz!");
       window.location.href = "/";      
     } catch (err) {
-      toast("Try with another email or password!");
+      toast.error("Try with another email or password!");
       console.error(err);
     }
     // try {
