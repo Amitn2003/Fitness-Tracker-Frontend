@@ -35,9 +35,17 @@ const Navbar = () => {
     <nav className="bg-gray-800 text-white px-6 py-4 shadow-md">
       <div className="flex justify-between items-center">
         {/* Logo */}
+    <div className="flex items-center space-x-2">
+      <img 
+        src="/logo.png" 
+        alt="Logo image" 
+        className="h-9 w-auto" 
+      />
+        {/* Logo */}
         <Link to="/" className="text-2xl font-bold">
           Fitz
         </Link>
+        </div>
 
         {/* Links */}
         <div className="flex items-center space-x-6">

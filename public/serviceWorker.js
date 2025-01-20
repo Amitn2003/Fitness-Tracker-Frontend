@@ -4,6 +4,7 @@ const urlsToCache = [
   "/manifest.json",
   "/offline.html",
   "/android-chrome-512x512.png",
+  "/logo.png",
   "/routines", 
   "/dashboard", 
   "/profile", 
@@ -247,7 +248,7 @@ const scheduleNotifications = () => {
   setInterval(() => {
     self.registration.showNotification('Reminder', {
       body: "It's time to check your streak progress2222! 🏋️‍♂️",
-      icon: '/android-chrome-512x512.png',
+      icon: '/logo.png',
     });
   }, notificationInterval);
 };

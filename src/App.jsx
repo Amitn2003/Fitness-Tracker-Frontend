@@ -22,6 +22,7 @@ import Settings from './pages/Dashboard/Settings';
 import AdminExercises from './pages/AdminExercises';
 import Homepage from './pages/Homepage';
 import { scheduleDailyNotification } from './utils/scheduleNotifications';
+import Footer from './components/Footer';
 
 
 if ("serviceWorker" in navigator) {
@@ -79,6 +80,7 @@ function App() {
         </div>
             <ToastContainer />
           </Router>
+          <Footer/>
         </AuthProvider>
       </ThemeProvider>
     </>
