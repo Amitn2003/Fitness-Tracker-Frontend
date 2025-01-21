@@ -23,6 +23,7 @@ import AdminExercises from './pages/AdminExercises';
 import Homepage from './pages/Homepage';
 import { scheduleDailyNotification } from './utils/scheduleNotifications';
 import Footer from './components/Footer';
+import NotFound from './pages/NotFound';
 
 
 if ("serviceWorker" in navigator) {
@@ -55,8 +56,11 @@ function App() {
       <ThemeProvider>
         <AuthProvider>
           <Router>
+            <div className='min-h-screen flex flex-col'>
+
+          
             <Navbar />
-            <div className=" ">
+            <div className=" flex-grow">
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/login" element={<Login />} />
@@ -76,11 +80,14 @@ function App() {
           <Route path="/routine-details/:id" element={<RoutineDetails />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/admin/exercises" element={<AdminExercises />} />
+            {/* Catch-all route for 404 */}
+        <Route path="/*" element={<NotFound />} />
           </Routes>
         </div>
             <ToastContainer />
-          </Router>
+          </div>
           <Footer/>
+          </Router>
         </AuthProvider>
       </ThemeProvider>
     </>

@@ -1,10 +1,13 @@
-const CACHE_NAME = "fitz-cache-v2";
+const CACHE_NAME = "fitz-cache-v3";
 const urlsToCache = [
   "/",
   "/manifest.json",
   "/offline.html",
   "/android-chrome-512x512.png",
   "/logo.png",
+  "/running.jpg",
+  "/strength-training.jpg",
+  "/yoga-meditation.jpg",
   "/routines", 
   "/dashboard", 
   "/profile", 
